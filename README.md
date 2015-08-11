@@ -15,6 +15,7 @@
 ## Instructions
 
 ### Step 1: Install packaged software and libraries
+Type this in the terminal:
 ```bash
 sudo apt-get install autoconf automake bison build-essential curl git-core libapr1 libaprutil1 libc6-dev libltdl-dev libreadline6 libreadline6-dev libsqlite3-0 libsqlite3-dev libssl-dev libtool libxml2-dev libxslt-dev libxslt1-dev libyaml-dev ncurses-dev nodejs openssl sqlite3 zlib1g zlib1g-dev
 ```
@@ -32,16 +33,16 @@ curl -L get.rvm.io | bash -s stable
 ```
 This will print a long message.
 
-Then verify RVM
+Then **verify** RVM
 
 Type this in the terminal:
 ```bash
 type rvm | head -1
 ```
 Expected result:
-
+```bash
 rvm is a function
-
+```
 Type this in the terminal:
 ```bash
 rvm -v
@@ -56,9 +57,10 @@ Type this in the terminal:
 ```bash
 curl -L get.rvm.io | bash -s stable
 ```
-Then sit back and wait. It will take some time. This downloads and compiles Ruby.
+The above downloads and compiles Ruby
+Sit back and wait. It will take some time.
 
-When it is finished type the following:
+Once it's finished type the following:
 ```bash
 rvm use 2.2
 rvm --default use 2.2
@@ -68,8 +70,9 @@ To verify that all went good, type the following:
 ruby -v
 ```
 Expected result:
+```bash
 ruby 2.2.1p85 (2015-02-26 revision 49769) [x86_64-linux]
-
+```
 ### Step 5: Install Rails
 
 Type this in the terminal:
@@ -92,7 +95,7 @@ git config --global user.email "Your Actual Email"
 ```
 Use the same email address for Git, Github and SSH.
 
-To verify type the following:
+To **verify** type the following:
 ```bash
 git config --get user.name
 ```
@@ -106,7 +109,7 @@ Type the following:
 ```bash
 ls ~/.ssh/id_rsa
 ```
-If you see the message `No such file or directory`, you don't have an SSH key
+If you see the message `No such file or directory`, you don't have an SSH key.
 
 To create an SSH key type the following:
 ```bash
