@@ -4,91 +4,27 @@
 
 ## What I'll be installing
 
-- Ruby
-- Rails
-- Git
-- Text editor of choice
-	- Sublime Text 2
-	- Atom
-- Various Ruby Gems
+* Ruby
+* Ruby on Rails
+* Various Ruby Gems
+* Heroku Toolbelt
+* Git
+* Text editor of choice
+  * [Sublime Text](https://www.sublimetext.com/)
+  * [Atom](https://atom.io/)
+  * [Vim](http://www.vim.org/)
+* Terminal customizations
 
 ## Instructions
 
-### Step 1: Install packaged software and libraries
-Type this in the terminal:
-```bash
-sudo apt-get install autoconf automake bison build-essential curl git-core libapr1 libaprutil1 libc6-dev libltdl-dev libreadline6 libreadline6-dev libsqlite3-0 libsqlite3-dev libssl-dev libtool libxml2-dev libxslt-dev libxslt1-dev libyaml-dev ncurses-dev nodejs openssl sqlite3 zlib1g zlib1g-dev
-```
-### Step 2: Install Git
+## Install & Configure Git
 
-Type this in the terminal:
+To install Git:
 ```bash
 sudo apt-get install git
 ```
-### Step 3: Install RVM
 
-Type the following in the terminal to install RVM:
-```bash
-curl -L get.rvm.io | bash -s stable
-```
-This will print a long message.
-
-Then **verify** RVM
-
-Type this in the terminal:
-```bash
-type rvm | head -1
-```
-Expected result:
-```bash
-rvm is a function
-```
-Type this in the terminal:
-```bash
-rvm -v
-```
-Expected result:
-```bash
-rvm 1.x.x (stable) by Wayne E. Seguin (wayneeseguin@gmail.com), Michal Papis <mpapis@gmail.com> [https://rvm.io/]
-```
-### Step 4: Install Ruby
-
-Type this in the terminal:
-```bash
-curl -L get.rvm.io | bash -s stable
-```
-The above downloads and compiles Ruby
-Sit back and wait. It will take some time.
-
-Once it's finished type the following:
-```bash
-rvm use 2.2
-rvm --default use 2.2
-```
-To verify that all went good, type the following:
-```bash
-ruby -v
-```
-Expected result:
-```bash
-ruby 2.2.1p85 (2015-02-26 revision 49769) [x86_64-linux]
-```
-### Step 5: Install Rails
-
-Type this in the terminal:
-```bash
-gem install rails
-```
-### Step 6: Install your text editor of choice
-
-- Sublime Text
-	- To install it download it from [here.](http://www.sublimetext.com/)
-- Atom
-	- To install it download it from [here.](https://atom.io/)
-
-## Configure Git
-
-Type this in the terminal:
+To set your name and email type the following:
 ```bash
 git config --global user.name "Your Actual Name"
 git config --global user.email "Your Actual Email"
@@ -128,4 +64,121 @@ Next it will ask you for a passphrase.
 Finally add your generated key to the authentication agent by typing the following:
 ```bash
 ssh-add ~/.ssh/id_rsa
+```
+## Install Ruby & Ruby on Rails
+
+The first step is to intall some dependenies for Ruby.
+```
+sudo apt-get update
+sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev
+```
+
+Next I'm going to install Ruby using **rvm**.
+```
+sudo apt-get install libgdbm-dev libncurses5-dev automake libtool bison libffi-dev
+curl -L https://get.rvm.io | bash -s stable
+source ~/.rvm/scripts/rvm
+rvm install 2.2.3
+rvm use 2.2.3 --default
+ruby -v
+```
+
+Install the documentation for each package locally and then install Bundler.
+```
+echo "gem: --no-ri --no-rdoc" > ~/.gemrc
+gem install bundler
+```
+
+Finally install Rails:
+```
+gem install rails -v 4.2.4
+```
+
+Make sure that everything is installed correctly:
+```
+rails -v
+# Expected output
+Rails 4.2.4
+```
+
+## Install Heroku Toolbelt
+Type the following:
+```
+wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+```
+
+Once installed, you'll have access to the heroku command from your command shell.
+Login using your heroku credentials:
+```
+heroku login
+```
+
+## Install your text editor of choice
+My personal favorite is Sublime Text and Vim (when I want to make some quick changes)
+
+Sublime installation is a pretty straightforward proccess. Just download the version that suits you from Sublime's website and double click to install it.
+
+### Sublime configurations
+
+I use the follow configuration for Sublime:
+* [Package Control](https://packagecontrol.io/)
+* [Theme - Spacegray](https://packagecontrol.io/packages/Theme%20-%20Spacegray)
+* [Markdown Preview](https://packagecontrol.io/packages/Markdown%20Preview)
+
+**Key Bindings** for Markdown Preview:
+```
+[
+	{ "keys": ["alt+m"], "command": "markdown_preview", "args": {"target": "browser", "parser":"github"} }
+]
+```
+
+To install vim type:
+```
+sudo apt-get install vim
+```
+
+## Terminal Customizations
+
+### Tab completion
+As the name says. When you hit tab one of the following gets auto-completed:
+* local and remote branch names
+* local and remote tag names
+* .git/remotes file names
+* git 'subcommands'
+* tree paths within 'ref:path/to/file' expressions
+* file paths within current working directory and index
+* common --long-options
+
+To enable this open **bashrc** `nano ~/.bashrc` and add the following line at the end of the file:
+```
+## Enable tab completion
+source ~/Scripts/git-completion.bash # git-completion.bash location
+									 # You can find git-completion.bash
+									 # in this repo
+```
+
+### New colours
+Add the following at the end of the **.bashrc** file:
+```
+# colors!
+green="\[\033[0;32m\]"
+blue="\[\033[0;34m\]"
+purple="\[\033[0;35m\]"
+reset="\[\033[0m\]"
+```
+
+### Change command prompt
+Add the following at the end of the **.bashrc** file:
+```
+### Change command prompt
+source ~/Scripts/git-prompt.sh # git-prompt.sh location
+							   # You can find git-prompt.sh
+							   # in this repo
+export GIT_PS1_SHOWDIRTYSTATE=1
+# '\u' adds the name of the current user to the prompt
+# '\$(__git_ps1)' adds git-related stuff
+# '\W' adds the name of the current directory
+export PS1="$purple\u$green\$(__git_ps1)$blue \W $ $reset"
+export NVM_DIR="/home/username/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 ```
