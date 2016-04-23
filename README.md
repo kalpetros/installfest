@@ -1,39 +1,34 @@
 # Installfest
-
 **Installfest** is the guide I follow to set up a new development environment under Linux.
-
 ## What I'll be installing
-
 * Ruby
 * Ruby on Rails
+* Node.js
 * Various Ruby Gems
 * Heroku Toolbelt
 * Git
 * Text editor of choice
-  * [Sublime Text](https://www.sublimetext.com/)
   * [Atom](https://atom.io/)
+  * [Sublime Text](https://www.sublimetext.com/)
   * [Vim](http://www.vim.org/)
 * Terminal customizations
 
 ## Instructions
-
 ## Install & Configure Git
-
 To install Git:
-```bash
-sudo apt-get install git
 ```
-
+$ sudo apt-get install git
+```
 To set your name and email type the following:
-```bash
-git config --global user.name "Your Actual Name"
-git config --global user.email "Your Actual Email"
+```
+$ git config --global user.name "Your Actual Name"
+$ git config --global user.email "Your Actual Email"
 ```
 Use the same email address for Git, Github and SSH.
 
 To **verify** type the following:
-```bash
-git config --get user.name
+```
+$ git config --get user.name
 ```
 You should get back your name. Do the same with your email to verify your email.
 
@@ -42,14 +37,14 @@ You should get back your name. Do the same with your email to verify your email.
 First check if you already have an SSH key.
 
 Type the following:
-```bash
-ls ~/.ssh/id_rsa
+```
+$ ls ~/.ssh/id_rsa
 ```
 If you see the message `No such file or directory`, you don't have an SSH key.
 
 To create an SSH key type the following:
-```bash
-ssh-keygen -C example@example.com -t rsa
+```
+$ ssh-keygen -t rsa -b 4096 -C "example@example.com"
 ```
 Replace `example@example.com` with your email.
 
@@ -62,83 +57,82 @@ Next it will ask you for a passphrase.
 | Press `Enter` to accept blank passphrase, then press `Enter` again. | Enter a passphrase if you share your Computer with other people. |
 
 Finally add your generated key to the authentication agent by typing the following:
-```bash
-ssh-add ~/.ssh/id_rsa
 ```
+$ ssh-add ~/.ssh/id_rsa
+```
+Finally copy the content of **id_rsa.pub** and paste in your GitHub account.
+
 ## Install Ruby & Ruby on Rails
+First I'm going to install [RVM](http://rvm.io/).
 
-The first step is to intall some dependenies for Ruby.
+We'll use `curl` to install RVM.
 ```
-sudo apt-get update
-sudo apt-get install git-core curl zlib1g-dev build-essential libssl-dev libreadline-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt1-dev libcurl4-openssl-dev python-software-properties libffi-dev
+$ sudo apt-get install curl
 ```
+Once curl is finished installing paste the following:
+```
+$ gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+```
+Then type the following to install RVM:
 
-Next I'm going to install Ruby using **rvm**.
+**Note**: Append `--rails` or `--ruby` for all in one installation.
 ```
-sudo apt-get install libgdbm-dev libncurses5-dev automake libtool bison libffi-dev
-curl -L https://get.rvm.io | bash -s stable
-source ~/.rvm/scripts/rvm
-rvm install 2.2.3
-rvm use 2.2.3 --default
-ruby -v
+$ \curl -sSL https://get.rvm.io | bash -s stable
 ```
-
-Install the documentation for each package locally and then install Bundler.
+In my case:
 ```
-echo "gem: --no-ri --no-rdoc" > ~/.gemrc
-gem install bundler
+$ \curl -sSL https://get.rvm.io | bash -s stable --ruby
 ```
-
-Finally install Rails:
+Check ruby version:
 ```
-gem install rails -v 4.2.4
+$ ruby -v
 ```
-
-Make sure that everything is installed correctly:
+Install **Node.js**:
 ```
-rails -v
-# Expected output
-Rails 4.2.4
+$ sudo apt-get install nodejs
 ```
-
+Then install **bundler**:
+```
+$ gem install bundler
+```
+and finally **rails**:
+```
+$ gem install rails
+```
+Check rails version:
+```
+$ rails -v
+```
 ## Install Heroku Toolbelt
 Type the following:
 ```
-wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+$ wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 ```
-
 Once installed, you'll have access to the heroku command from your command shell.
 Login using your heroku credentials:
 ```
-heroku login
+$ heroku login
 ```
-
 ## Install your text editor of choice
-My personal favorite is Sublime Text and Vim (when I want to make some quick changes)
+My personal favorite is Atom and Vim (when I want to make some quick changes)
 
-Sublime installation is a pretty straightforward proccess. Just download the version that suits you from Sublime's website and double click to install it.
+Atom installation is a pretty straightforward process. Just download it from https://atom.io/ and double click to install it.
 
-### Sublime configurations
+**Note:** I noticed that under Ubuntu GNOME 16.04 LTS you can't install it directly due to some dependencies issues.
 
-I use the follow configuration for Sublime:
-* [Package Control](https://packagecontrol.io/)
-* [Theme - Spacegray](https://packagecontrol.io/packages/Theme%20-%20Spacegray)
-* [Markdown Preview](https://packagecontrol.io/packages/Markdown%20Preview)
-
-**Key Bindings** for Markdown Preview:
+To install it open your terminal and type:
+```bash
+$ sudo dpkg -i atom_package.deb
 ```
-[
-	{ "keys": ["alt+m"], "command": "markdown_preview", "args": {"target": "browser", "parser":"github"} }
-]
+If you get a dependencies missing error type the following to install the missing dependencies:
+```bash
+$ sudo apt-get install -f
 ```
-
 To install vim type:
 ```
-sudo apt-get install vim
+$ sudo apt-get install vim
 ```
-
 ## Terminal Customizations
-
 ### Tab completion
 As the name says. When you hit tab one of the following gets auto-completed:
 * local and remote branch names
@@ -156,7 +150,6 @@ source ~/Scripts/git-completion.bash # git-completion.bash location
 									 # You can find git-completion.bash
 									 # in this repo
 ```
-
 ### New colours
 Add the following at the end of the **.bashrc** file:
 ```
@@ -166,7 +159,6 @@ blue="\[\033[0;34m\]"
 purple="\[\033[0;35m\]"
 reset="\[\033[0m\]"
 ```
-
 ### Change command prompt
 Add the following at the end of the **.bashrc** file:
 ```
